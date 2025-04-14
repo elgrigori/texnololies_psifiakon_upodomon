@@ -1,0 +1,49 @@
+# Ignore only venv in root
+/venv/
+/.venv/
+
+# Ignore mp4 and pt files everywhere
+*.mp4
+*.pt
+
+# VS Code
+.vscode/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environment
+.env
+*.env
+
+# Logs
+*.log
+
+# pytest
+.pytest_cache/
+
+# Coverage
+htmlcov/
+.coverage
+.cache
+
+# mypy
+.mypy_cache/
+
+# SQLite
+*.sqlite3
+db.sqlite3
+
+# MacOS
+.DS_Store
+
+# PyCharm
+.idea/
+
+# Docker
+*.pid
+
+# Azure Functions local settings
+local.settings.json
