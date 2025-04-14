@@ -13,7 +13,7 @@ BLOB_CONTAINER_NAME = "videos"
 KAFKA_TOPIC = "video-chunks"
 KAFKA_BOOTSTRAP_SERVERS = "localhost:9092"
 
-def split_video_and_upload(video_path, chunk_duration=60):
+def split_video_and_upload(video_path, chunk_duration=120):
     cap = cv2.VideoCapture(video_path)
     if not cap.isOpened():
         print(f"Error: Could not open video file.")
@@ -48,7 +48,7 @@ def split_video_and_upload(video_path, chunk_duration=60):
             frame_counter += 1
 
         out.release()
-        print(f"Saved chunk: {chunk_filename}")
+        print("Saved chunk: {chunk_filename}")
 
         # Upload to Azure
         with open(chunk_filename, "rb") as data:

@@ -14,10 +14,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-print("AZURE_CONNECTION_STRING:", os.getenv("AZURE_CONNECTION_STRING"))
-print("EVENT_HUB_CONN_STR:", os.getenv("EVENT_HUB_CONN_STR"))
-print("COSMOS_ENDPOINT:", os.getenv("COSMOS_ENDPOINT"))
-print("COSMOS_KEY:", os.getenv("COSMOS_KEY"))
 # Azure Blob Storage
 AZURE_CONNECTION_STRING = os.getenv("AZURE_CONNECTION_STRING")
 BLOB_CONTAINER_NAME = "videos"
