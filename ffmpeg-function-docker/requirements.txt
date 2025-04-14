@@ -1,0 +1,16 @@
+# DO NOT include azure-functions-worker in this file
+# The Python Worker is managed by Azure Functions platform
+# Manually managing azure-functions-worker may cause unexpected issues
+
+
+opencv-python
+kafka-python
+ultralytics
+deep-sort-realtime
+azure-storage-blob
+azure-eventhub
+azure-cosmos
+deep_sort_realtime
+opencv-python-headless
+requests
+python-dotenv
