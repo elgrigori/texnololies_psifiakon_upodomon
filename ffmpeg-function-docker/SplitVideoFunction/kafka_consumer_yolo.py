@@ -56,16 +56,16 @@ def send_alert_to_event_hub(data: dict):
         event_data_batch = event_producer.create_batch()
         event_data_batch.add(EventData(json.dumps(data)))
         event_producer.send_batch(event_data_batch)
-        print("Sent alert to Event Hub: {data}")
+        print(f"Sent alert to Event Hub: {data}")
     except Exception as e:
-        print("Failed to send alert to Event Hub: {e}")
+        print(f"Failed to send alert to Event Hub: {e}")
 
 def save_to_cosmos(data: dict):
     try:
         container.upsert_item(data)
-        print("Data saved to Cosmos DB: {data['track_id']}")
+        print(f"Data saved to Cosmos DB: {data['track_id']}")
     except Exception as e:
-        print("Failed to save data to CosmosDB with error: {e}")
+        print(f"Failed to save data to CosmosDB with error: {e}")
 
 def download_blob_secure(container_name, blob_name, local_filename):
     blob_service_client = BlobServiceClient.from_connection_string(AZURE_CONNECTION_STRING)
@@ -153,7 +153,7 @@ def run_yolo_deepsort_speed(video_path):
                 save_to_cosmos(alert_data)
 
                 if speed > SPEED_THRESHOLD_KMH:
-                    print("ALERT! Track vehicle with {track_id} moving at {speed} km/h in direction: {traffic_direction}")
+                    print(f"ALERT! Track vehicle with {track_id} moving at {speed} km/h in direction: {traffic_direction}")
 
                     send_alert_to_event_hub(alert_data)
 
@@ -178,4 +178,4 @@ for message in consumer:
         run_yolo_deepsort_speed(filename)
         os.remove(filename)
     except Exception as e:
-        print("Error processing chunk video with filename {filename}: {e}")
+        print(f"Error processing chunk video with filename {filename}: {e}")

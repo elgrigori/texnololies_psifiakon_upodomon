@@ -3,6 +3,8 @@ import os
 import json
 from azure.storage.blob import BlobServiceClient
 from kafka import KafkaProducer
+from dotenv import load_dotenv
+
 load_dotenv()
 
 print("AZURE_CONNECTION_STRING:", os.getenv("AZURE_CONNECTION_STRING"))
@@ -14,7 +16,7 @@ KAFKA_BOOTSTRAP_SERVERS = "localhost:9092"
 def split_video_and_upload(video_path, chunk_duration=60):
     cap = cv2.VideoCapture(video_path)
     if not cap.isOpened():
-        print("Error: Could not open video file.")
+        print(f"Error: Could not open video file.")
         return
 
     fps = int(cap.get(cv2.CAP_PROP_FPS))
@@ -46,13 +48,13 @@ def split_video_and_upload(video_path, chunk_duration=60):
             frame_counter += 1
 
         out.release()
-        print("Saved chunk: {chunk_filename}")
+        print(f"Saved chunk: {chunk_filename}")
 
         # Upload to Azure
         with open(chunk_filename, "rb") as data:
             blob_client = blob_service.get_blob_client(container=BLOB_CONTAINER_NAME, blob=chunk_filename)
             blob_client.upload_blob(data, overwrite=True)
-            print("Uploaded {chunk_filename} to Azure")
+            print(f"Uploaded {chunk_filename} to Azure")
 
         # Send metadata to Kafka
         metadata = {
@@ -60,7 +62,7 @@ def split_video_and_upload(video_path, chunk_duration=60):
             "blob_url": f"https://videocarstorage.blob.core.windows.net/{BLOB_CONTAINER_NAME}/{chunk_filename}"
         }
         producer.send(KAFKA_TOPIC, metadata)
-        print("Chunk video metadata: {metadata}")
+        print(f"Chunk video metadata: {metadata}")
 
         # if chunk_counter ==1: 
         #     break
@@ -71,7 +73,7 @@ def split_video_and_upload(video_path, chunk_duration=60):
 
     cap.release()
     producer.flush()
-    print("Video split completed!")
+    print(f"Video split completed!")
 
 # 🔁 Τρέξε το
 split_video_and_upload("videocar.mp4")
